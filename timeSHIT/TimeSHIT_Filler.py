@@ -34,7 +34,7 @@ class TimeSHIT(object):
     
     def schedule(self):
         config = self.read_conf('config.txt')
-        schedule.every(10).seconds.do(self.fill_timeshit, config['jira_url'], {
+        schedule.every().day.at('17:45').do(self.fill_timeshit, config['jira_url'], {
             "timeSpent": "{0}h {1}m".format(config['hours_to_fill'], config['minutes_to_fill']),
             "comment": None if config['comment'] == 'null' else config['comment'],
             "started": re.sub(r'\d{6}', '000', datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%f+0530"))
