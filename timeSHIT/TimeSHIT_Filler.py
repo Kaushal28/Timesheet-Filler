@@ -6,14 +6,12 @@ class TimeSHIT(object):
         return datetime.datetime.today().weekday() >= 5
 
     def fill_timeshit(self, jira_url, payload, headers):
-        print (headers['Authorization'])
         # Checks for weekends
         if self.isWeekend():
             print ('Today is weekend! No timeSHIT!')
             return
 
         response = requests.post(jira_url, data=json.dumps(payload), verify=False, headers=headers)
-        print (response.status_code)
         if (response.status_code == 201):
             print ('Successfully filled timeSHIT for date {0} with {1}.'.format(datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%f+0530")[:10], payload['timeSpent']))
         else:
