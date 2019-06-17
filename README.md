@@ -1,13 +1,13 @@
 # Timesheet-Filler
 Ease the pain of logging your time in JIRA Timesheets
 
-# Installation 
+## Installation 
 
 Run following command to install `timeSHIT` module:
 
 `pip install timeSHIT`
 
-# How to run?
+## How to run?
 Create a `config.txt` file with following content: 
 
 <pre>{
@@ -23,3 +23,6 @@ Create a `config.txt` file with following content:
 Now run following command in the directory where above `config.txt` is saved.
 
 For Linux: `nohup python -m timeSHIT &`
+
+### Note
+Supports both Python 2.x and 3.x
