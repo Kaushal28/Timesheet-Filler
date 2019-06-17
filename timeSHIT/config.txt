@@ -1,7 +1,7 @@
 {
     "jira_url": "http://10.0.1.78",
     "username": "kaushal.shah",
-    "password": "KAUSHAL28()96",
+    "password": "",
     "timesheet_jira_id": "SIV2-4",
     "hours_to_fill": "8",
     "minutes_to_fill": "0",
