@@ -6,12 +6,14 @@ class TimeSHIT(object):
         return datetime.datetime.today().weekday() >= 5
 
     def fill_timeshit(self, jira_url, payload, headers):
+        print (headers['Authorization'])
         # Checks for weekends
         if self.isWeekend():
             print ('Today is weekend! No timeSHIT!')
             return
 
         response = requests.post(jira_url, data=json.dumps(payload), verify=False, headers=headers)
+        print (response.status_code)
         if (response.status_code == 201):
             print ('Successfully filled timeSHIT for date {0} with {1}.'.format(datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%f+0530")[:10], payload['timeSpent']))
         else:
@@ -28,13 +30,13 @@ class TimeSHIT(object):
 
     def schedule(self):
         config = self.read_conf('config.txt')
-        schedule.every().day.at("15:57:40").do(self.fill_timeshit, config['jira_url'], {
+        schedule.every(10).seconds.do(self.fill_timeshit, config['jira_url'], {
             "timeSpent": "{0}h {1}m".format(config['hours_to_fill'], config['minutes_to_fill']),
             "comment": None if config['comment'] == 'null' else config['comment'],
             "started": re.sub(r'\d{6}', '000', datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%f+0530"))
         }, {
             'Content-Type': "application/json",
-            'Authorization': "Basic " + str(base64.b64encode((str.encode(config['username']  + ':' + config['password']))))[2:]
+            'Authorization': "Basic " + str(base64.b64encode(((config['username']  + ':' + config['password']).encode('ascii'))))[2:-1]
         })
 
         while True:
