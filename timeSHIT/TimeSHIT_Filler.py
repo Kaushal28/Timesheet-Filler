@@ -27,6 +27,11 @@ class TimeSHIT(object):
 
         return config_json
 
+    def get_auth_token(self, username, password):
+        if sys.version_info >= (3, 0):
+            return str(base64.b64encode(((username + ':' + password).encode('ascii'))))[2:-1]
+        return str(base64.b64encode(((username + ':' + password).encode('ascii'))))
+    
     def schedule(self):
         config = self.read_conf('config.txt')
         schedule.every(10).seconds.do(self.fill_timeshit, config['jira_url'], {
@@ -35,7 +40,7 @@ class TimeSHIT(object):
             "started": re.sub(r'\d{6}', '000', datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%f+0530"))
         }, {
             'Content-Type': "application/json",
-            'Authorization': "Basic " + str(base64.b64encode(((config['username']  + ':' + config['password']).encode('ascii'))))[2:-1]
+            'Authorization': "Basic " + self.get_auth_token(config['username'], config['password'])
         })
 
         while True:
