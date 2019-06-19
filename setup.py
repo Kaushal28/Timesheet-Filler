@@ -3,7 +3,7 @@ setuptools.setup(
     name="timeSHIT",
     packages=['timeSHIT'],
     package_dir={'timeSHIT': 'timeSHIT'},
-    version="0.0.1",
+    version="0.0.2",
     author="kaushal28",
     entry_points={'console_scripts': ['timeSHIT = timeSHIT.__main__:main' ]},
     author_email="shah.kaushal95@gmail.com",
