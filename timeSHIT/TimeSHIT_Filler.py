@@ -6,6 +6,7 @@ class TimeSHIT(object):
         return datetime.datetime.today().weekday() >= 5
 
     def fill_timeshit(self, jira_url, payload, headers):
+        payload['started'] = re.sub(r'\d{6}', '000', datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%f+0530"))
         # Checks for weekends
         if self.isWeekend():
             print ('Today is weekend! No timeSHIT!')
